@@ -3,15 +3,16 @@ import './globals.css'
 import { ReactNode } from 'react'
 
 export const metadata = {
-  title: 'BYDS Game',
-  description: 'Don’t Do That Action!',
+  title: 'พฤติกรรมต้องห้าม',
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="th">
-      <body className="bg-gray-50 min-h-screen text-gray-900">
-        <main className="max-w-md mx-auto p-4">{children}</main>
+      <body className="bg-gray-100 min-h-screen">
+        <main className="flex items-center justify-center p-4">
+          <div className="w-full max-w-sm">{children}</div>
+        </main>
       </body>
     </html>
   )

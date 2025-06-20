@@ -1,3 +1,4 @@
+// src/app/game/[roomId]/page.tsx
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -10,7 +11,6 @@ export default function GamePage() {
   const [me, setMe] = useState<Player | null>(null)
   const router = useRouter()
 
-  // Load player info and poll room state
   useEffect(() => {
     const stored = localStorage.getItem(`player_${roomId}`)
     if (stored) setMe(JSON.parse(stored))
@@ -21,49 +21,43 @@ export default function GamePage() {
 
   async function fetchState() {
     const res = await fetch(`/api/rooms/${roomId}/state`)
-    if (res.ok) {
-      const data: Room = await res.json()
-      setRoom(data)
-    }
+    if (res.ok) setRoom(await res.json())
   }
 
-  if (!room) return <p>Loading game…</p>
-  if (!me) return <p>Player info not found. Please re-join the room.</p>
+  if (!room) return <p className="text-center">กำลังโหลดเกม…</p>
+  if (!me) return <p className="text-center">ข้อมูลผู้เล่นไม่พบ กรุณาเข้าห้องใหม่</p>
+
+  const isLastRound = room.currentRound === room.totalRounds
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-lg font-semibold">
+    <div className="bg-white border border-gray-300 rounded-lg shadow p-6 space-y-4">
+      <h2 className="text-lg font-semibold text-center">
         รอบที่ {room.currentRound} / {room.totalRounds}
       </h2>
 
-      <div className="p-4 border rounded bg-white">
-        <p className="italic">
+      <div className="p-4 border border-gray-200 rounded bg-gray-50">
+        <p className="italic text-center">
           {/* TODO: pull a scenario card based on room.category & room.currentRound */}
-          สถานการณ์ของคุณ: …  
+          สถานการณ์ของคุณ: …
         </p>
       </div>
 
       <button
-        onClick={() => {
-          // TODO: call an API to record that this player lost this round
-          alert('คุณกดว่า “ฉันแพ้”')
-        }}
-        className="w-full py-3 bg-red-500 text-white rounded"
+        onClick={() => alert('คุณกดว่า “ฉันแพ้”')}
+        className="w-full py-3 bg-red-500 text-white rounded-lg hover:opacity-90"
       >
         ฉันแพ้
       </button>
 
       <button
-        onClick={() => {
-          if (room.currentRound < room.totalRounds) {
-            // TODO: advance round via API
-          } else {
-            router.push(`/game/${roomId}?end=true`)
-          }
-        }}
-        className="w-full py-3 bg-black text-white rounded"
+        onClick={() =>
+          isLastRound
+            ? router.push(`/game/${roomId}?end=true`)
+            : router.refresh()
+        }
+        className="w-full py-3 bg-black text-white rounded-lg hover:opacity-90"
       >
-        ถัดไป
+        {isLastRound ? 'ดูผลสรุป' : 'ถัดไป'}
       </button>
     </div>
   )

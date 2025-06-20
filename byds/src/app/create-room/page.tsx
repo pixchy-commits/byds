@@ -23,42 +23,48 @@ export default function CreateRoomPage() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-xl font-semibold">สร้างห้อง</h2>
+    <div className="bg-white border border-gray-300 rounded-lg shadow p-6 space-y-4">
+      <h2 className="text-xl font-semibold text-center">สร้างห้อง</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input
+          required
+          placeholder="ชื่อห้อง"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
 
-      <input
-        required
-        placeholder="ชื่อห้อง"
-        value={name}
-        onChange={e => setName(e.target.value)}
-        className="w-full px-3 py-2 border rounded"
-      />
+        <div className="flex space-x-2">
+          {[2, 3, 4, 5, 6].map(n => (
+            <button
+              key={n}
+              type="button"
+              onClick={() => setMax(n)}
+              className={`flex-1 py-2 rounded-lg text-center ${
+                maxPlayers === n
+                  ? 'bg-black text-white'
+                  : 'border border-gray-300 hover:bg-gray-50'
+              }`}
+            >
+              {n}
+            </button>
+          ))}
+        </div>
 
-      <div className="flex space-x-2">
-        {[2, 3, 4, 5, 6].map(n => (
-          <button
-            key={n}
-            type="button"
-            onClick={() => setMax(n)}
-            className={`px-3 py-1 rounded ${
-              maxPlayers === n ? 'bg-black text-white' : 'border'
-            }`}
-          >
-            {n}
-          </button>
-        ))}
-      </div>
+        <input
+          placeholder="หมวดหมู่ (เกม/ทำอาหาร/อื่นๆ)"
+          value={category}
+          onChange={e => setCat(e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
 
-      <input
-        placeholder="หมวดหมู่ (เกม/ทำอาหาร/อื่นๆ)"
-        value={category}
-        onChange={e => setCat(e.target.value)}
-        className="w-full px-3 py-2 border rounded"
-      />
-
-      <button type="submit" className="w-full py-3 bg-black text-white rounded">
-        สร้าง
-      </button>
-    </form>
+        <button
+          type="submit"
+          className="w-full py-3 bg-black text-white rounded-lg text-lg hover:opacity-90"
+        >
+          สร้าง
+        </button>
+      </form>
+    </div>
   )
 }

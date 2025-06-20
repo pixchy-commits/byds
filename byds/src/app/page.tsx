@@ -7,17 +7,19 @@ export default function HomePage() {
   const router = useRouter()
 
   return (
-    <div className="space-y-6 text-center">
-      <h1 className="text-3xl font-bold">พฤติกรรมต้องห้าม</h1>
+    <div className="bg-white border border-gray-300 rounded-lg shadow p-6 space-y-6">
+      <h1 className="text-2xl font-bold text-center">พฤติกรรมต้องห้าม</h1>
+
       <button
         onClick={() => router.push('/join-room')}
-        className="w-full py-3 bg-black text-white rounded"
+        className="block w-full py-3 border border-gray-300 rounded-lg text-lg hover:bg-gray-50"
       >
         เข้าห้อง
       </button>
+
       <button
         onClick={() => router.push('/create-room')}
-        className="w-full py-3 border border-black rounded"
+        className="block w-full py-3 bg-black text-white rounded-lg text-lg hover:opacity-90"
       >
         สร้างห้อง
       </button>
