@@ -1,6 +1,6 @@
 // src/lib/data.ts
 
-import { Room, Player } from './types'
+import { Room, Player, GameMode } from './types'
 import { randomUUID } from 'crypto'
 
 // In-memory store of all rooms
@@ -12,6 +12,7 @@ const rooms = new Map<string, Room>()
 export function createRoom(
   name: string,
   maxPlayers: number,
+  gameMode: GameMode,
   category: string,
   totalRounds = 5
 ): Room {
@@ -20,6 +21,7 @@ export function createRoom(
     id,
     name,
     maxPlayers,
+    gameMode,
     category,
     players: [],
     currentRound: 1,
